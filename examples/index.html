@@ -1,63 +1,132 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="../jquery-1.10.2.min.js" ></script>
-        <script src="../picturePassword.js" ></script>
-        <title>Login</title>
-    </head>
-    <body>
-        <h1>Picture Password</h1>
-        <div style="margin: 10px;">
-            <h2>Same picture with different resolution returns same result</h2>
-            <div style="margin: 10px; float: left;">
-                <form>
-                    <input type="text" id="pass1" />            
-                    <button type='button' onclick="clearPssword(picPass1);">Clear</button>
-                </form>
-                <img class="img1" src="images/Penguins.jpg" width="600" height="400"/>
-            </div>
-            <div style="margin: 10px; float: left;">
-                <form>
-                    <input type="text" id="pass2" />            
-                    <button type='button' onclick="clearPssword(picPass2);">Clear</button>
-                </form>
-                <img class="img2" src="images/Penguins.jpg" width="300" height="200"/>
-            </div>
-        </div>        
-        <div style="clear: both">
-            <h2>Hidden input for password field</h2>
-            <form>
-                <input type="hidden" id="pass3" />            
-                <button type='button' onclick="clearPssword(picPass3);">Clear</button>
-            </form>
-            <img class="img3" src="images/Penguins.jpg" width="300" height="200"/>
-        </div>
-        <div style="clear: both">
-            <h2>Combination of images</h2>
-            <form>
-                <input type="text" id="pass4" />            
-                <button type='button' onclick="clearPssword(picPass4);">Clear</button>
-            </form>
-            <img class="img4" src="images/Penguins.jpg" width="300" height="200"/>
-            <img class="img4" src="images/Penguins.jpg" width="300" height="200"/>
-        </div>
-    </body>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="../draw-a-secret.js"></script>
+    <title>Example</title>
+</head>
+<style>
+    form {
+        margin: 10px 5px;
+    }
+
+    form img {
+        display: block;
+        margin:  5px 5px 0 0;
+        border:  1px solid #555;
+    }
+
+    section {
+        border-bottom: 1px solid #555;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    .compare {
+        size:        16px;
+        font-weight: bold;
+    }
+
+    .matched {
+        color: green;
+    }
+
+    .not-matched {
+        color: orangered;
+    }
+
+</style>
+<script>
+    function clearPass(img) {
+        img.clearPassword();
+    }
+</script>
+<body>
+<!--https://pixabay.com/en/hazelnuts-common-hazel-1574367/-->
+<h1>Draw a Secret</h1>
+<hr/>
+<section>
+    <h2>Same picture with different scales.</h2>
+    <form class="left">
+        <button type='button' onclick="clearPass(das1);">Clear</button>
+        <input type="text" id="pass1" readonly="readonly"/>
+        <img id="img1" src="images/img.jpg" width="450" height="300"/>
+    </form>
+    <form class="left">
+        <button type='button' onclick="clearPass(das2);">Clear</button>
+        <input type="text" id="pass2" readonly="readonly"/>
+        <img id="img2" src="images/img.jpg" width="300" height="200"/>
+    </form>
+    <p class="clear"/>
+    <span id="compare1" class="compare matched">Matched!</span>
     <script>
-        $(function(){
-            /* 1. */
-            picPass1 = $(".img1").picturePassword("#pass1");
-            /* 2. same picture with different resolution returns same result*/
-            picPass2 = $(".img2").picturePassword("#pass2");
-            /* 3. use hidden input for password field */
-            picPass3 = $(".img3").picturePassword("#pass3");
-            /* 4. use combination of images */
-            picPass4 = $(".img4").picturePassword("#pass4");                        
-            
-           
-        });        
-        function clearPssword(img){
-            img.clearPassword();             
-        }
+        $(function () {
+            var compare = function () {
+                var pass1 = $("#pass1").val();
+                var pass2 = $("#pass2").val();
+                if (pass1 == pass2) {
+                    $("#compare1").text("Matched!").addClass("matched").removeClass("not-matched");
+                } else {
+                    $("#compare1").text("Not matched!").addClass("not-matched").removeClass("matched");
+                }
+            };
+
+            // set a call back function for onChange and onClear
+            // set same number of rows and columns for same image in different scales
+            // lower amounts for rows and columns make it easier to perform but loose sensibility to small changes
+            das1 = $("#img1").drawASecret("#pass1", {onChange: compare, onClear: compare, rows: 8, columns: 8});
+            das2 = $("#img2").drawASecret("#pass2", {onChange: compare, onClear: compare, rows: 8, columns: 8});
+        });
     </script>
+</section>
+<section>
+    <h2>Hidden input for password field.</h2>
+    <form>
+        <button type='button' onclick="clearPass(das3);">Clear</button>
+        <input type="hidden" id="pass3"/>
+        <img id="img3" src="images/img.jpg" width="300" height="200"/>
+    </form>
+    <script>
+        $(function () {
+            das3 = $("#img3").drawASecret("#pass3");
+        });
+    </script>
+</section>
+<section>
+    <h2>Combination of images.</h2>
+    <form>
+        <button type='button' onclick="clearPass(das4);">Clear</button>
+        <input type="text" id="pass4" readonly="readonly"/>
+        <p class="clear"/>
+        <img class="img4 left" src="images/img.jpg" width="300" height="200"/>
+        <img class="img4 left" src="images/img.jpg" width="300" height="200"/>
+        <p class="clear"/>
+    </form>
+    <script>
+        $(function () {
+            das4 = $(".img4").drawASecret("#pass4");
+        });
+    </script>
+</section>
+<section>
+    <h2>Password input.</h2>
+    <form>
+        <button type='button' onclick="clearPass(das5);">Clear</button>
+        <input type="password" id="pass5" readonly="readonly"/>
+        <img id="img5" src="images/img.jpg" width="300" height="200"/>
+    </form>
+    <script>
+        $(function () {
+            das5 = $("#img5").drawASecret("#pass5");
+        });
+    </script>
+</section>
+</body>
 </html>
