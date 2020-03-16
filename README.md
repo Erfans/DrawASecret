@@ -23,3 +23,7 @@ or draw a pattern on the image. The interacted positions
 on the image will be transformed to a string of numbers 
 which can further be hashed. Also it is possible to use 
 it on a combination of images.
+
+---
+
+[Online demo](http://erfans.github.io/Draw-a-Secret/)
