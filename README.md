@@ -16,6 +16,7 @@ For more information please read the following article:
 This library implements a type of Draw-a-Secret.
 
 ###Background Draw A Secret
+
 In this form a background image will be shown as the context.
 User can draw a pattern on different parts of the image,
 or draw a pattern on the image. The interacted positions 
