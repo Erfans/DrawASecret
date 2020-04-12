@@ -26,4 +26,4 @@ it on a combination of images.
 
 ---
 
-[Online demo](http://erfans.github.io/Draw-a-Secret/)
+[Online demo](https://webily.io/draw-a-secret)
