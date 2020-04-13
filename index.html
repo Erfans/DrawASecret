@@ -159,19 +159,19 @@
         crossorigin="anonymous"></script>
 
 <script type="module">
-    import BDAS from "./src/bdas.js";
+    import DAS from "./dist/bundle.js";
 
     // set a call back function for onChange and onClear
     // set same number of rows and columns for same image in different scales
     // lower amounts for rows and columns make it easier to perform but loose sensibility to small changes
-    let das1 = new BDAS({
+    let das1 = new DAS.BDAS({
         bgImageIds: 'img1',
         inputPasswordId: 'pass1',
         numberOfRows: 8,
         numberOfColumns: 8
     });
 
-    let das2 = new BDAS({
+    let das2 = new DAS.BDAS({
         bgImageIds: 'img2',
         inputPasswordId: 'pass2',
         numberOfRows: 8,
@@ -189,21 +189,21 @@
         }
     }, 1000);
 
-    let das3 = new BDAS({
+    let das3 = new DAS.BDAS({
         bgImageIds: 'img3',
         inputPasswordId: 'pass3',
     });
 
     $('#clear3').click(e => das3.clearPassword());
 
-    let das4 = new BDAS({
+    let das4 = new DAS.BDAS({
         bgImageIds: ['img4-1', 'img4-2'],
         inputPasswordId: 'pass4',
     });
 
     $('#clear4').click(e => das4.clearPassword());
 
-    let das5 = new BDAS({
+    let das5 = new DAS.BDAS({
         bgImageIds: 'img5',
         inputPasswordId: 'pass5',
     });

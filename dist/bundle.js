@@ -1,9 +1,42 @@
-import Util from './util.js'
+/**
+ * Util class
+ */
+class Util {
+    /**
+     * Create an object and extend it by arg objects
+     * @param objects
+     * @return {{} & *[]}
+     */
+    static extends(...objects) {
+        let output = {};
+
+        objects.forEach(function (object) {
+            output = Object.assign(output, object);
+        });
+
+        return output
+    }
+
+    /**
+     * Add multiple event listener to elements
+     *
+     * @param element
+     * @param type: string
+     * @param listener: EventListenerOrEventListenerObject
+     * @param options?: boolean | AddEventListenerOptions
+     * @return void
+     */
+    static addEventListener(element, type, listener, options) {
+        type.split(' ').forEach(function (evt) {
+            element.addEventListener(evt, listener, options);
+        });
+    }
+}
 
 /**
  * Background draw-a-secret
  */
-export default class BDAS {
+class BDAS {
     /**
      * Default config
      *
@@ -39,7 +72,7 @@ export default class BDAS {
 
         config = Util.extends(BDAS.defaultConfig, config);
 
-        this.bgImageIds = typeof config.bgImageIds === 'string' ? [config.bgImageIds] : config.bgImageIds
+        this.bgImageIds = typeof config.bgImageIds === 'string' ? [config.bgImageIds] : config.bgImageIds;
         this.inputPasswordId = config.inputPasswordId;
         this.numberOfRows = config.numberOfRows;
         this.numberOfColumns = config.numberOfColumns;
@@ -98,7 +131,7 @@ export default class BDAS {
             Util.addEventListener(img, 'touchend mouseup', (event) => {
                 event.preventDefault();
                 this.isTouching = false;
-            })
+            });
         }
 
         // notice: arrow functions have lexical context
@@ -108,7 +141,7 @@ export default class BDAS {
                 y: -1
             };
             this.isTouching = false;
-        })
+        });
     }
 
     makeString(event, offset, columnWidth, rowHeight, imgNum) {
@@ -128,7 +161,7 @@ export default class BDAS {
                 this.input.value = this.hashFn ? this.hashFn(this.pathString) : this.pathString;
             }
 
-            this.lastPosition = currentPosition
+            this.lastPosition = currentPosition;
         }
     }
 
@@ -143,3 +176,28 @@ export default class BDAS {
         }
     }
 }
+
+/**
+ * Base class for "draw a secrets" implementations
+ */
+class DAS {
+    /**
+     * Version number
+     * @returns {string}
+     * @constructor
+     */
+    static get version() {
+        return '1.2.0'
+    }
+
+    /**
+     * Background draw-a-secret
+     * @return {BDAS}
+     * @constructor
+     */
+    static get BDAS() {
+        return BDAS;
+    }
+}
+
+export default DAS;
