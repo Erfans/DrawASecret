@@ -13,9 +13,9 @@ For more information please read the following article:
 
 [Draw-a-Secret](https://en.wikipedia.org/wiki/Draw_a_Secret)
 
-This library implements a type of Draw-a-Secret.
+This library implements a type of Draw-a-Secret in JS.
 
-###Background Draw A Secret
+### Background Draw A Secret
 
 In this form a background image will be shown as the context.
 User can draw a pattern on different parts of the image,
@@ -26,4 +26,4 @@ it on a combination of images.
 
 ---
 
-[Online demo](https://webily.io/draw-a-secret)
+[Online demo](http://erfans.github.io/DrawASecret/)
